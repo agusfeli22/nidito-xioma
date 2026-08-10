@@ -369,6 +369,36 @@
       </div>
     </div>
 
+    <!-- MESA comedor -->
+    <div class="furn">
+      <div class="photo"><img src="mesa.jpg" alt="Mesa de comedor"></div>
+      <div class="info">
+        <h4>Mesa de comedor</h4>
+        <div class="meas">
+          <div><b>Alto</b><span>92 cm</span></div>
+          <div><b>Ancho</b><span>81 cm</span></div>
+          <div><b>Profundidad</b><span>1,27 m</span></div>
+          <div><b>Volumen</b><span>≈ 0,95 m³</span></div>
+        </div>
+        <div class="vol">✅ Madera maciza · 4 sillas a juego</div>
+      </div>
+    </div>
+
+    <!-- MESITA tocadiscos -->
+    <div class="furn">
+      <div class="photo"><img src="mesita-tocadiscos.jpg" alt="Mesita del tocadiscos"></div>
+      <div class="info">
+        <h4>Mesita del tocadiscos</h4>
+        <div class="meas">
+          <div><b>Alto</b><span>69 cm</span></div>
+          <div><b>Ancho</b><span>30 cm</span></div>
+          <div><b>Profundidad</b><span>78 cm</span></div>
+          <div><b>Volumen</b><span>≈ 0,16 m³</span></div>
+        </div>
+        <div class="vol">✅ Estructura metálica · 2 estantes · con vinilos incluidos 🎶</div>
+      </div>
+    </div>
+
     <div class="furn pending">
       <div class="photo">📷 Foto pendiente</div>
       <div class="info">
@@ -393,12 +423,12 @@
 <script>
   // floating hearts
   const hc=document.getElementById('hearts');
-  const emojis=['❤️','💕','💗','🩷','✨','💘'];
+  const emojis=['🐩'];
   for(let i=0;i<18;i++){
     const s=document.createElement('span');
     s.textContent=emojis[Math.floor(Math.random()*emojis.length)];
     s.style.left=Math.random()*100+'vw';
-    s.style.fontSize=(14+Math.random()*22)+'px';
+    s.style.fontSize=(22+Math.random()*30)+'px';
     s.style.animationDuration=(9+Math.random()*12)+'s';
     s.style.animationDelay=(Math.random()*12)+'s';
     hc.appendChild(s);
