@@ -59,6 +59,29 @@
   }
   .sub{margin-top:16px;color:var(--muted);font-size:clamp(15px,2.2vw,19px);max-width:620px;margin-left:auto;margin-right:auto}
 
+  /* fusion image block */
+  .fusion{max-width:520px;margin:6px auto 26px;position:relative}
+  .fusion img{
+    width:100%;border-radius:22px;display:block;
+    border:3px solid rgba(255,211,110,.65);
+    box-shadow:0 0 0 6px rgba(255,211,110,.12),0 0 55px rgba(255,211,110,.55),0 24px 60px rgba(0,0,0,.5);
+    animation:aura 2.4s ease-in-out infinite;
+  }
+  @keyframes aura{
+    0%,100%{box-shadow:0 0 0 6px rgba(255,211,110,.12),0 0 45px rgba(255,211,110,.45),0 24px 60px rgba(0,0,0,.5)}
+    50%{box-shadow:0 0 0 8px rgba(255,211,110,.20),0 0 75px rgba(255,211,110,.85),0 24px 60px rgba(0,0,0,.5)}
+  }
+  .fusion-cap{
+    margin-top:16px;color:#f1e7d0;font-size:14.5px;line-height:1.65;max-width:520px;
+    background:rgba(255,211,110,.07);border:1px solid rgba(255,211,110,.28);
+    border-radius:16px;padding:14px 18px;text-align:left;
+  }
+  .fusion-cap b{color:var(--gold)}
+  .hero-name{
+    font-weight:800;background:linear-gradient(100deg,var(--gold),var(--rose2),var(--violet));
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+  }
+
   /* countdown */
   .count{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-top:34px}
   .count .box{
@@ -142,6 +165,18 @@
 <div class="wrap">
   <header class="hero">
     <span class="kicker">Plan de Ruta al Amor</span>
+
+    <div class="fusion">
+      <img src="fusion.png" alt="Xioma y Felipe haciendo la Fusión Ha estilo Dragon Ball">
+      <div class="fusion-cap">
+        <b>¡FU… SIÓN… HA! 🔥</b>
+        Después de 3 años de entrenamiento en la Cámara del Amor y el Tiempo,
+        Xioma y Felipe dominaron la técnica prohibida más poderosa del universo:
+        la fusión definitiva. El resultado — <span class="hero-name">Felioma</span> —
+        tiene un poder de pelea de <b>∞</b> y un solo objetivo: mudarse al nidito de amor. 💥
+      </div>
+    </div>
+
     <h1>Camino al Nidito<br>de Amor con Xioma</h1>
     <p class="sub">De la casa de hoy al hogar de los dos en Urdinarrain. Cada día, un paso más cerca. <span class="beat">❤️</span></p>
 
