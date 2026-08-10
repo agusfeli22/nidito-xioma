@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Camino al Nidito de Amor 🏡 · Felipe & Xioma</title>
+<style>
+  :root{
+    --bg:#0e0b1a;
+    --bg2:#150f2b;
+    --card:rgba(255,255,255,.06);
+    --card-brd:rgba(255,255,255,.12);
+    --ink:#f4f0ff;
+    --muted:#b9aee0;
+    --rose:#ff5c8a;
+    --rose2:#ff9bc0;
+    --violet:#8b6cff;
+    --gold:#ffd36e;
+    --mint:#5ee0c0;
+    --sky:#59c1ff;
+    --shadow:0 20px 60px rgba(0,0,0,.45);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:"Segoe UI",system-ui,-apple-system,sans-serif;
+    color:var(--ink);
+    background:
+      radial-gradient(1200px 700px at 12% -8%, rgba(139,108,255,.35), transparent 60%),
+      radial-gradient(900px 600px at 108% 4%, rgba(255,92,138,.30), transparent 55%),
+      radial-gradient(800px 800px at 50% 120%, rgba(94,224,192,.16), transparent 60%),
+      linear-gradient(160deg,var(--bg),var(--bg2));
+    min-height:100vh;
+    padding:0 0 80px;
+    overflow-x:hidden;
+  }
+
+  /* floating hearts */
+  .hearts{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
+  .hearts span{position:absolute;bottom:-40px;font-size:20px;opacity:.5;animation:float linear infinite}
+  @keyframes float{to{transform:translateY(-115vh) rotate(360deg);opacity:0}}
+
+  .wrap{position:relative;z-index:2;max-width:1080px;margin:0 auto;padding:0 22px}
+
+  /* HERO */
+  header.hero{
+    text-align:center;padding:70px 20px 40px;position:relative;
+  }
+  .kicker{
+    display:inline-block;letter-spacing:.28em;text-transform:uppercase;font-size:12px;
+    color:var(--rose2);border:1px solid var(--card-brd);padding:7px 16px;border-radius:999px;
+    background:var(--card);backdrop-filter:blur(6px);margin-bottom:22px;
+  }
+  h1{
+    font-size:clamp(34px,6vw,62px);line-height:1.05;font-weight:800;
+    background:linear-gradient(100deg,#fff,var(--rose2) 40%,var(--violet) 75%,var(--sky));
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+    text-shadow:0 2px 40px rgba(255,92,138,.25);
+  }
+  .sub{margin-top:16px;color:var(--muted);font-size:clamp(15px,2.2vw,19px);max-width:620px;margin-left:auto;margin-right:auto}
+
+  /* countdown */
+  .count{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-top:34px}
+  .count .box{
+    background:var(--card);border:1px solid var(--card-brd);border-radius:18px;
+    padding:16px 20px;min-width:92px;backdrop-filter:blur(8px);box-shadow:var(--shadow);
+  }
+  .count .num{font-size:34px;font-weight:800;color:var(--gold);line-height:1}
+  .count .lbl{font-size:11px;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);margin-top:8px}
+
+  /* progress */
+  .progress-wrap{margin:44px auto 10px;max-width:640px}
+  .progress-top{display:flex;justify-content:space-between;font-size:13px;color:var(--muted);margin-bottom:10px}
+  .bar{height:14px;border-radius:999px;background:rgba(255,255,255,.08);overflow:hidden;border:1px solid var(--card-brd)}
+  .bar > i{display:block;height:100%;width:0;border-radius:999px;
+    background:linear-gradient(90deg,var(--rose),var(--violet),var(--sky));
+    transition:width 1.4s cubic-bezier(.16,1,.3,1);box-shadow:0 0 18px rgba(139,108,255,.6)}
+
+  /* section titles */
+  .sec-title{display:flex;align-items:center;gap:12px;margin:56px 0 10px;font-size:24px;font-weight:800}
+  .sec-title small{font-weight:500;color:var(--muted);font-size:14px}
+
+  /* TIMELINE */
+  .timeline{position:relative;margin-top:26px;padding-left:8px}
+  .timeline::before{content:"";position:absolute;left:26px;top:8px;bottom:8px;width:3px;
+    background:linear-gradient(180deg,var(--rose),var(--violet),var(--mint));border-radius:3px;opacity:.55}
+  .phase{position:relative;padding:0 0 22px 66px;margin-bottom:6px}
+  .dot{position:absolute;left:14px;top:22px;width:26px;height:26px;border-radius:50%;
+    background:var(--violet);border:4px solid var(--bg2);box-shadow:0 0 0 3px rgba(139,108,255,.35);
+    display:flex;align-items:center;justify-content:center;font-size:12px;z-index:2}
+  .card{
+    background:var(--card);border:1px solid var(--card-brd);border-radius:20px;
+    padding:20px 22px;backdrop-filter:blur(10px);box-shadow:var(--shadow);
+    transition:transform .25s ease,border-color .25s ease;cursor:pointer;
+  }
+  .card:hover{transform:translateY(-4px);border-color:var(--rose)}
+  .card .head{display:flex;justify-content:space-between;align-items:flex-start;gap:14px;flex-wrap:wrap}
+  .card h3{font-size:19px}
+  .chip{font-size:12px;padding:5px 12px;border-radius:999px;white-space:nowrap;font-weight:600}
+  .c-rose{background:rgba(255,92,138,.18);color:var(--rose2);border:1px solid rgba(255,92,138,.4)}
+  .c-viol{background:rgba(139,108,255,.18);color:#c8b8ff;border:1px solid rgba(139,108,255,.4)}
+  .c-mint{background:rgba(94,224,192,.16);color:var(--mint);border:1px solid rgba(94,224,192,.4)}
+  .c-gold{background:rgba(255,211,110,.16);color:var(--gold);border:1px solid rgba(255,211,110,.4)}
+  .c-sky{background:rgba(89,193,255,.16);color:var(--sky);border:1px solid rgba(89,193,255,.4)}
+  .card .when{color:var(--muted);font-size:13px;margin-top:4px}
+  .card .body{color:#e7e0ff;margin-top:12px;line-height:1.6;font-size:15px;
+    max-height:0;overflow:hidden;transition:max-height .4s ease,margin .4s ease}
+  .card.open .body{max-height:600px;margin-top:14px}
+  .card ul{margin:10px 0 0 18px;color:var(--muted);font-size:14px}
+  .card ul li{margin:6px 0}
+  .toggle-hint{font-size:11px;color:var(--muted);opacity:.7;margin-top:8px;display:block}
+
+  /* FURNITURE */
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:18px;margin-top:22px}
+  .furn{
+    background:var(--card);border:1px solid var(--card-brd);border-radius:18px;overflow:hidden;
+    box-shadow:var(--shadow);transition:transform .25s ease,border-color .25s}
+  .furn:hover{transform:translateY(-4px);border-color:var(--violet)}
+  .furn .photo{height:150px;display:flex;align-items:center;justify-content:center;
+    background:repeating-linear-gradient(45deg,rgba(255,255,255,.04),rgba(255,255,255,.04) 12px,rgba(255,255,255,.07) 12px,rgba(255,255,255,.07) 24px);
+    color:var(--muted);font-size:13px;text-align:center;border-bottom:1px solid var(--card-brd)}
+  .furn .photo img{width:100%;height:100%;object-fit:cover}
+  .furn .info{padding:14px 16px}
+  .furn h4{font-size:16px;margin-bottom:10px}
+  .meas{display:grid;grid-template-columns:1fr 1fr;gap:8px;font-size:13px}
+  .meas div{background:rgba(255,255,255,.05);border:1px solid var(--card-brd);border-radius:10px;padding:7px 9px}
+  .meas b{display:block;color:var(--muted);font-size:10px;letter-spacing:.08em;text-transform:uppercase;margin-bottom:2px}
+  .meas span{color:var(--ink);font-weight:600}
+  .vol{margin-top:10px;font-size:13px;color:var(--mint);font-weight:600}
+  .pending{opacity:.75}
+  .note{margin-top:18px;background:rgba(255,211,110,.08);border:1px dashed rgba(255,211,110,.4);
+    border-radius:14px;padding:16px 18px;color:#f7ecc9;font-size:14px;line-height:1.6}
+
+  footer{text-align:center;margin-top:60px;color:var(--muted);font-size:13px;line-height:1.8}
+  .beat{display:inline-block;animation:beat 1.1s ease-in-out infinite}
+  @keyframes beat{0%,100%{transform:scale(1)}15%{transform:scale(1.28)}30%{transform:scale(1)}45%{transform:scale(1.18)}}
+</style>
+</head>
+<body>
+<div class="hearts" id="hearts"></div>
+
+<div class="wrap">
+  <header class="hero">
+    <span class="kicker">Plan de Ruta al Amor</span>
+    <h1>Camino al Nidito<br>de Amor con Xioma</h1>
+    <p class="sub">De la casa de hoy al hogar de los dos en Urdinarrain. Cada día, un paso más cerca. <span class="beat">❤️</span></p>
+
+    <div class="count" id="countdown">
+      <div class="box"><div class="num" id="d">–</div><div class="lbl">Días</div></div>
+      <div class="box"><div class="num" id="h">–</div><div class="lbl">Horas</div></div>
+      <div class="box"><div class="num" id="m">–</div><div class="lbl">Min</div></div>
+      <div class="box"><div class="num" id="s">–</div><div class="lbl">Seg</div></div>
+    </div>
+    <p class="sub" style="margin-top:16px;font-size:14px">⏳ para ver a Xioma en Urdinarrain · <b>jueves 20 de agosto</b></p>
+
+    <div class="progress-wrap">
+      <div class="progress-top"><span>Hoy · 9 ago</span><span id="pct">0%</span><span>Mudanza · 12 sep</span></div>
+      <div class="bar"><i id="fill"></i></div>
+    </div>
+  </header>
+
+  <!-- TIMELINE -->
+  <div class="sec-title">🗺️ El recorrido <small>· tocá cada tarjeta para ver el detalle</small></div>
+  <div class="timeline">
+
+    <div class="phase">
+      <div class="dot">📐</div>
+      <div class="card open">
+        <div class="head">
+          <div><h3>Relevamiento de muebles</h3><div class="when">Dom 9 → Jue 13 de agosto · en casa</div></div>
+          <span class="chip c-rose">Fase 1</span>
+        </div>
+        <div class="body">
+          Medir cada mueble para conocer su volumen y tamaño, y así planear dónde entra en la casa de Xioma.
+          <ul>
+            <li>Medir alto × ancho × profundidad de cada mueble.</li>
+            <li>Sacar foto de cada uno (van al final de este documento).</li>
+            <li>Calcular volumen aproximado para estimar el flete.</li>
+            <li><b>Deadline: miércoles 13 de agosto.</b></li>
+          </ul>
+          <span class="toggle-hint">Ver ficha de cada mueble ↓ al final</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="phase">
+      <div class="dot">💘</div>
+      <div class="card">
+        <div class="head">
+          <div><h3>¡Reencuentro con Xioma!</h3><div class="when">Jueves 20 de agosto · viajo a Urdinarrain</div></div>
+          <span class="chip c-viol">El día</span>
+        </div>
+        <div class="body">
+          El día más esperado: me voy a Urdinarrain a ver al amor de mi vida. Empieza la mejor parte del plan.
+        </div>
+      </div>
+    </div>
+
+    <div class="phase">
+      <div class="dot">🌅</div>
+      <div class="card">
+        <div class="head">
+          <div><h3>Escapada a Concepción del Uruguay</h3><div class="when">Vie 21 → Dom 23 de agosto · los dos juntos</div></div>
+          <span class="chip c-sky">Escapada</span>
+        </div>
+        <div class="body">
+          Viajamos juntos a Concepción del Uruguay el viernes y volvemos a Urdi el domingo 23. Puro disfrute con Xioma.
+        </div>
+      </div>
+    </div>
+
+    <div class="phase">
+      <div class="dot">🏡</div>
+      <div class="card">
+        <div class="head">
+          <div><h3>Semana en el nidito de amor</h3><div class="when">Dom 23 → toda la semana · Urdinarrain</div></div>
+          <span class="chip c-rose">Juntos</span>
+        </div>
+        <div class="body">
+          De vuelta en Urdi, pasamos toda la semana juntos en nuestro nidito de amor. 🥰
+        </div>
+      </div>
+    </div>
+
+    <div class="phase">
+      <div class="dot">📏</div>
+      <div class="card">
+        <div class="head">
+          <div><h3>Medir espacios y ordenar en Urdi</h3><div class="when">Jue 20 → Dom 30 de agosto · Urdinarrain</div></div>
+          <span class="chip c-mint">Fase 2</span>
+        </div>
+        <div class="body">
+          En paralelo a la semana juntos, medimos los espacios de la casa y ordenamos todo para cuando llegue la mudanza.
+          <ul>
+            <li>Medir paredes, ambientes y huecos donde van los muebles.</li>
+            <li>Cruzar con las medidas del relevamiento (Fase 1).</li>
+            <li>Definir el lugar de cada mueble antes de traerlos.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="phase">
+      <div class="dot">📦</div>
+      <div class="card">
+        <div class="head">
+          <div><h3>Empaquetar todo acá</h3><div class="when">Dom 30 ago → Sáb 12 de septiembre · en casa</div></div>
+          <span class="chip c-gold">Fase 3</span>
+        </div>
+        <div class="body">
+          Preparar todo acá y meterlo en cajas, listo para el día de la mudanza.
+          <ul>
+            <li>Embalar por ambiente y rotular las cajas.</li>
+            <li>Proteger lo frágil y desarmar lo que haga falta.</li>
+            <li>Dejar todo pronto para cargar el flete.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="phase">
+      <div class="dot">🚚</div>
+      <div class="card">
+        <div class="head">
+          <div><h3>¡Mudanza!</h3><div class="when">Sábado 12 de septiembre · (tentativo)</div></div>
+          <span class="chip c-viol">Meta 🎉</span>
+        </div>
+        <div class="body">
+          El gran día: mudamos todo a Urdinarrain y arrancamos la vida juntos en nuestro hogar. ❤️
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- FURNITURE -->
+  <div class="sec-title" id="muebles">🛋️ Fichas de muebles <small>· medidas + foto (se completan a medida que midas)</small></div>
+  <div class="note">
+    📌 <b>Cómo llenamos esto:</b> pasame cada mueble con sus medidas (<b>alto × ancho × profundidad</b>) y una foto,
+    y voy actualizando su ficha acá con el volumen calculado y la imagen incrustada. Abajo dejé fichas de arranque
+    listas para completar — decime cuáles agregar o sacar.
+  </div>
+
+  <div class="grid" id="furn-grid">
+
+    <!-- HELADERA Samsung RT43K6235BS -->
+    <div class="furn">
+      <div class="photo" style="background:#1a1520;padding:8px">
+        <div style="width:64px;height:110px;border-radius:8px 8px 6px 6px;background:linear-gradient(160deg,#3a3a42,#17171b);border:1px solid #4a4a52;position:relative;box-shadow:0 8px 20px rgba(0,0,0,.5)">
+          <div style="position:absolute;top:34px;left:0;right:0;height:2px;background:#0c0c0f"></div>
+          <div style="position:absolute;top:8px;right:8px;width:4px;height:16px;border-radius:3px;background:#6a6a72"></div>
+          <div style="position:absolute;top:44px;right:8px;width:4px;height:40px;border-radius:3px;background:#6a6a72"></div>
+        </div>
+      </div>
+      <div class="info">
+        <h4>Heladera Samsung RT43K6235BS</h4>
+        <div class="meas">
+          <div><b>Alto</b><span>178,5 cm</span></div>
+          <div><b>Ancho</b><span>70 cm</span></div>
+          <div><b>Profundidad</b><span>72,6 cm</span></div>
+          <div><b>Volumen</b><span>≈ 0,91 m³</span></div>
+        </div>
+        <div class="vol">✅ No Frost Inverter · 440 L · 73 kg</div>
+      </div>
+    </div>
+
+    <!-- LAVARROPAS Samsung WW65A400SUBG -->
+    <div class="furn">
+      <div class="photo" style="background:#1a1520;padding:8px">
+        <div style="width:96px;height:110px;border-radius:8px;background:linear-gradient(160deg,#c9ccd4,#8f939c);border:1px solid #d8dbe2;position:relative;box-shadow:0 8px 20px rgba(0,0,0,.5)">
+          <div style="position:absolute;top:8px;left:8px;right:8px;height:14px;border-radius:4px;background:#6d7078"></div>
+          <div style="position:absolute;top:34px;left:50%;transform:translateX(-50%);width:56px;height:56px;border-radius:50%;background:radial-gradient(circle at 40% 35%,#2b2d33,#0e0f12);border:5px solid #e3e6ec"></div>
+        </div>
+      </div>
+      <div class="info">
+        <h4>Lavarropas Samsung WW65A400SUBG</h4>
+        <div class="meas">
+          <div><b>Alto</b><span>85 cm</span></div>
+          <div><b>Ancho</b><span>60 cm</span></div>
+          <div><b>Profundidad</b><span>55 cm</span></div>
+          <div><b>Volumen</b><span>≈ 0,28 m³</span></div>
+        </div>
+        <div class="vol">✅ Carga frontal · 6,5 kg · 1000 RPM · 57 kg</div>
+      </div>
+    </div>
+
+    <div class="furn pending">
+      <div class="photo">📷 Foto pendiente</div>
+      <div class="info">
+        <h4>+ Agregar mueble</h4>
+        <div class="meas">
+          <div><b>Alto</b><span>— cm</span></div>
+          <div><b>Ancho</b><span>— cm</span></div>
+          <div><b>Profundidad</b><span>— cm</span></div>
+          <div><b>Volumen</b><span>— m³</span></div>
+        </div>
+        <div class="vol">Decime el nombre y las medidas</div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    Hecho con <span class="beat">❤️</span> para Felipe & Xioma<br>
+    Urdinarrain · nuestro nidito de amor
+  </footer>
+</div>
+
+<script>
+  // floating hearts
+  const hc=document.getElementById('hearts');
+  const emojis=['❤️','💕','💗','🩷','✨','💘'];
+  for(let i=0;i<18;i++){
+    const s=document.createElement('span');
+    s.textContent=emojis[Math.floor(Math.random()*emojis.length)];
+    s.style.left=Math.random()*100+'vw';
+    s.style.fontSize=(14+Math.random()*22)+'px';
+    s.style.animationDuration=(9+Math.random()*12)+'s';
+    s.style.animationDelay=(Math.random()*12)+'s';
+    hc.appendChild(s);
+  }
+
+  // toggle cards
+  document.querySelectorAll('.timeline .card').forEach(c=>{
+    c.addEventListener('click',()=>c.classList.toggle('open'));
+  });
+
+  // countdown to Aug 20, 2026 (reencuentro) — hora Argentina
+  const target=new Date('2026-08-20T00:00:00-03:00').getTime();
+  // progress span: Aug 9 -> Sep 12
+  const start=new Date('2026-08-09T00:00:00-03:00').getTime();
+  const end=new Date('2026-09-12T00:00:00-03:00').getTime();
+  function tick(){
+    const now=Date.now();
+    let diff=Math.max(0,target-now);
+    const d=Math.floor(diff/864e5);
+    const h=Math.floor(diff%864e5/36e5);
+    const m=Math.floor(diff%36e5/6e4);
+    const s=Math.floor(diff%6e4/1e3);
+    document.getElementById('d').textContent=d;
+    document.getElementById('h').textContent=String(h).padStart(2,'0');
+    document.getElementById('m').textContent=String(m).padStart(2,'0');
+    document.getElementById('s').textContent=String(s).padStart(2,'0');
+    let p=Math.min(100,Math.max(0,(now-start)/(end-start)*100));
+    document.getElementById('fill').style.width=p.toFixed(1)+'%';
+    document.getElementById('pct').textContent=p.toFixed(0)+'%';
+  }
+  tick();setInterval(tick,1000);
+</script>
+</body>
+</html>
