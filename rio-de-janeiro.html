@@ -88,10 +88,13 @@
   .amt small{display:block;font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
   .card .body{color:#dcf3e8;margin-top:0;line-height:1.6;font-size:14.5px;
     max-height:0;overflow:hidden;transition:max-height .4s ease,margin .4s ease}
-  .card.open .body{max-height:400px;margin-top:14px}
+  .card.open .body{max-height:1000px;margin-top:14px}
   .card ul{margin:8px 0 0 18px;color:var(--muted);font-size:13.5px}
   .card ul li{margin:5px 0}
   .toggle-hint{font-size:11px;color:var(--muted);opacity:.7;margin-top:2px;display:block}
+  .card .shot{margin-top:14px;border-radius:12px;overflow:hidden;border:1px solid var(--card-brd);box-shadow:0 10px 30px rgba(0,0,0,.35)}
+  .card .shot img{display:block;width:100%;height:auto}
+  .card .shot-cap{font-size:11px;color:var(--muted);margin-top:6px;opacity:.8}
 
   /* totals table */
   .totals{margin-top:26px;background:var(--card);border:1px solid var(--card-brd);border-radius:20px;
@@ -159,6 +162,8 @@
           <li><b>Neto a pagar: USD 268,09</b></li>
           <li>El voucher se redime en pesos al tipo de cambio que aplique Flybondi al momento del pago — el monto final en ARS puede variar levemente.</li>
         </ul>
+        <div class="shot"><img src="flybondi-vuelo.jpg" alt="Captura de la cotización de vuelos Flybondi Buenos Aires - Río de Janeiro"></div>
+        <span class="shot-cap">Captura real de flybondi.com — ida 22 nov / vuelta 29 nov, 2 pasajeros</span>
       </div>
     </div>
 
@@ -220,6 +225,8 @@
           <li>Incluye impuestos y protección básica de daños por colisión. Cancelación gratuita hasta 6hs antes de la entrega.</li>
           <li>No incluido: depósito reembolsable de BRL 700 a pagar en el mostrador (se devuelve si no hay daños, no cuenta como gasto real).</li>
         </ul>
+        <div class="shot"><img src="localiza-auto.jpg" alt="Captura de la cotización de alquiler de auto Localiza en Río de Janeiro"></div>
+        <span class="shot-cap">Captura real de la reserva — Fiat Mobi económico, 25→29 nov</span>
       </div>
     </div>
 
