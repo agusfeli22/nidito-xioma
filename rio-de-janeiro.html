@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Presupuesto Río de Janeiro 🇧🇷 · 21-30 Nov</title>
+<style>
+  :root{
+    --bg:#071a14;
+    --bg2:#0a2418;
+    --card:rgba(255,255,255,.06);
+    --card-brd:rgba(255,255,255,.12);
+    --ink:#f2fbf6;
+    --muted:#a9c9ba;
+    --green:#00c46a;
+    --green2:#5ee0a8;
+    --yellow:#ffd429;
+    --blue:#3aa0ff;
+    --sand:#ffb95e;
+    --shadow:0 20px 60px rgba(0,0,0,.45);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:"Segoe UI",system-ui,-apple-system,sans-serif;
+    color:var(--ink);
+    background:
+      radial-gradient(1200px 700px at 12% -8%, rgba(0,196,106,.30), transparent 60%),
+      radial-gradient(900px 600px at 108% 4%, rgba(58,160,255,.28), transparent 55%),
+      radial-gradient(800px 800px at 50% 120%, rgba(255,212,41,.14), transparent 60%),
+      linear-gradient(160deg,var(--bg),var(--bg2));
+    min-height:100vh;
+    padding:0 0 80px;
+    overflow-x:hidden;
+  }
+
+  .wrap{position:relative;z-index:2;max-width:1080px;margin:0 auto;padding:0 22px}
+
+  .topnav{max-width:1080px;margin:0 auto;padding:18px 22px 0}
+  .topnav a{color:var(--muted);font-size:13px;text-decoration:none;border:1px solid var(--card-brd);
+    padding:7px 14px;border-radius:999px;background:var(--card)}
+  .topnav a:hover{color:var(--ink);border-color:var(--green2)}
+
+  header.hero{text-align:center;padding:40px 20px 30px;position:relative}
+  .kicker{
+    display:inline-block;letter-spacing:.28em;text-transform:uppercase;font-size:12px;
+    color:var(--green2);border:1px solid var(--card-brd);padding:7px 16px;border-radius:999px;
+    background:var(--card);backdrop-filter:blur(6px);margin-bottom:22px;
+  }
+  h1{
+    font-size:clamp(32px,6vw,58px);line-height:1.05;font-weight:800;
+    background:linear-gradient(100deg,#fff,var(--yellow) 40%,var(--green2) 75%,var(--blue));
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+    text-shadow:0 2px 40px rgba(0,196,106,.25);
+  }
+  .sub{margin-top:16px;color:var(--muted);font-size:clamp(15px,2.2vw,19px);max-width:640px;margin-left:auto;margin-right:auto}
+
+  .count{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-top:34px}
+  .count .box{
+    background:var(--card);border:1px solid var(--card-brd);border-radius:18px;
+    padding:16px 20px;min-width:92px;backdrop-filter:blur(8px);box-shadow:var(--shadow);
+  }
+  .count .num{font-size:34px;font-weight:800;color:var(--yellow);line-height:1}
+  .count .lbl{font-size:11px;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);margin-top:8px}
+
+  .sec-title{display:flex;align-items:center;gap:12px;margin:56px 0 10px;font-size:24px;font-weight:800}
+  .sec-title small{font-weight:500;color:var(--muted);font-size:14px}
+
+  /* summary stats */
+  .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-top:22px}
+  .stat{background:var(--card);border:1px solid var(--card-brd);border-radius:20px;padding:22px 22px;
+    box-shadow:var(--shadow);text-align:center}
+  .stat .big{font-size:30px;font-weight:800;color:var(--green2)}
+  .stat .lbl{margin-top:8px;color:var(--muted);font-size:13px}
+  .stat.total .big{color:var(--yellow)}
+
+  /* category cards */
+  .cats{display:flex;flex-direction:column;gap:14px;margin-top:22px}
+  .card{
+    background:var(--card);border:1px solid var(--card-brd);border-radius:20px;
+    padding:20px 22px;backdrop-filter:blur(10px);box-shadow:var(--shadow);
+    transition:transform .25s ease,border-color .25s ease;cursor:pointer;
+  }
+  .card:hover{transform:translateY(-3px);border-color:var(--green2)}
+  .card .head{display:flex;justify-content:space-between;align-items:flex-start;gap:14px;flex-wrap:wrap}
+  .card h3{font-size:18px;display:flex;align-items:center;gap:10px}
+  .amt{font-size:20px;font-weight:800;color:var(--yellow);white-space:nowrap}
+  .amt small{display:block;font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
+  .card .body{color:#dcf3e8;margin-top:0;line-height:1.6;font-size:14.5px;
+    max-height:0;overflow:hidden;transition:max-height .4s ease,margin .4s ease}
+  .card.open .body{max-height:400px;margin-top:14px}
+  .card ul{margin:8px 0 0 18px;color:var(--muted);font-size:13.5px}
+  .card ul li{margin:5px 0}
+  .toggle-hint{font-size:11px;color:var(--muted);opacity:.7;margin-top:2px;display:block}
+
+  /* totals table */
+  .totals{margin-top:26px;background:var(--card);border:1px solid var(--card-brd);border-radius:20px;
+    overflow:hidden;box-shadow:var(--shadow)}
+  .totals table{width:100%;border-collapse:collapse;font-size:14.5px}
+  .totals th{text-align:left;padding:14px 18px;color:var(--muted);font-size:11px;text-transform:uppercase;
+    letter-spacing:.08em;border-bottom:1px solid var(--card-brd)}
+  .totals td{padding:12px 18px;border-bottom:1px solid rgba(255,255,255,.06)}
+  .totals tr:last-child td{border-bottom:none}
+  .totals td:last-child, .totals th:last-child{text-align:right;font-variant-numeric:tabular-nums}
+  .totals tr.grand td{font-weight:800;font-size:16px;color:var(--yellow);border-top:1px solid var(--card-brd)}
+
+  .note{margin-top:22px;background:rgba(255,212,41,.08);border:1px dashed rgba(255,212,41,.4);
+    border-radius:14px;padding:16px 18px;color:#fbf0cf;font-size:13.5px;line-height:1.7}
+  .note b{color:var(--yellow)}
+
+  footer{text-align:center;margin-top:60px;color:var(--muted);font-size:13px;line-height:1.8}
+</style>
+</head>
+<body>
+
+<div class="topnav"><a href="index.html">← volver al Nidito de Amor</a></div>
+
+<div class="wrap">
+  <header class="hero">
+    <span class="kicker">Presupuesto de viaje</span>
+    <h1>Río de Janeiro 🇧🇷</h1>
+    <p class="sub">21 → 30 de noviembre · 9 noches / 10 días · 2 viajeros desde Buenos Aires</p>
+
+    <div class="count" id="countdown">
+      <div class="box"><div class="num" id="d">–</div><div class="lbl">Días</div></div>
+      <div class="box"><div class="num" id="h">–</div><div class="lbl">Horas</div></div>
+      <div class="box"><div class="num" id="m">–</div><div class="lbl">Min</div></div>
+      <div class="box"><div class="num" id="s">–</div><div class="lbl">Seg</div></div>
+    </div>
+    <p class="sub" style="margin-top:16px;font-size:14px">⏳ para el vuelo a Río · <b>sábado 21 de noviembre</b></p>
+  </header>
+
+  <!-- SUMMARY -->
+  <div class="sec-title">💰 Resumen <small>· estimación nivel "cómodo"</small></div>
+  <div class="stats">
+    <div class="stat total"><div class="big">USD 3.620</div><div class="lbl">Total estimado (2 personas)</div></div>
+    <div class="stat"><div class="big">USD 1.810</div><div class="lbl">Por persona</div></div>
+    <div class="stat"><div class="big">USD 362</div><div class="lbl">Por día (los 2)</div></div>
+    <div class="stat"><div class="big">USD 181</div><div class="lbl">Por día, por persona</div></div>
+  </div>
+
+  <!-- CATEGORIES -->
+  <div class="sec-title">🧾 Desglose por rubro <small>· tocá cada tarjeta para ver el detalle</small></div>
+  <div class="cats">
+
+    <div class="card open">
+      <div class="head">
+        <h3>✈️ Vuelos BUE ↔ GIG</h3>
+        <div class="amt">USD 760<small>ida y vuelta · 2 pax</small></div>
+      </div>
+      <div class="body">
+        Ida y vuelta Buenos Aires–Río de Janeiro para 2 personas, ~USD 380 por persona.
+        <ul>
+          <li>En noviembre se encuentran tarifas desde ~USD 280-350 (miércoles suele ser más barato que jueves).</li>
+          <li>Conviene mirar Aerolíneas Argentinas, GOL, LATAM y JetSMART, y reservar con anticipación.</li>
+          <li>No incluye equipaje despachado si la tarifa base no lo trae — sumar ~USD 30-50 por valija si hace falta.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="head">
+        <h3>🏨 Alojamiento</h3>
+        <div class="amt">USD 810<small>9 noches · hab. doble</small></div>
+      </div>
+      <div class="body">
+        Hotel 3-4 estrellas o buen departamento en Copacabana o Ipanema, ~USD 90/noche la habitación doble.
+        <ul>
+          <li>Zonas sugeridas: Copacabana (más económica, cerca de la playa) o Ipanema (más tranquila).</li>
+          <li>Con desayuno incluido se optimiza el rubro comida.</li>
+          <li>Reservando con 2-3 meses de anticipación suele bajar el precio por noche.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="head">
+        <h3>🍽️ Comida</h3>
+        <div class="amt">USD 900<small>10 días · 2 pax</small></div>
+      </div>
+      <div class="body">
+        ~USD 45 por persona por día (almuerzo + cena en restaurantes de gama media + cafés/snacks).
+        <ul>
+          <li>Botecos y "por kilo" bajan bastante el promedio si se usan seguido.</li>
+          <li>Reservar algún restaurante top (ej. cocina baiana o frutos de mar) sube el promedio algún día puntual.</li>
+          <li>Agua, jugos y caipirinhas incluidos en el estimado.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="head">
+        <h3>🚕 Transporte local</h3>
+        <div class="amt">USD 120<small>10 días · 2 pax</small></div>
+      </div>
+      <div class="body">
+        Metro + Uber/99 para moverse entre Copacabana, Ipanema, Centro y Santa Teresa.
+        <ul>
+          <li>El metro de Río es barato y cubre gran parte de la Zona Sur.</li>
+          <li>Uber conviene de noche o con equipaje; de día el metro/bus alcanza.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="head">
+        <h3>🎟️ Actividades y tours</h3>
+        <div class="amt">USD 440<small>2 pax</small></div>
+      </div>
+      <div class="body">
+        Las atracciones principales de Río, para los 2.
+        <ul>
+          <li>Cristo Redentor (van + entrada) ~USD 45 p/p</li>
+          <li>Pan de Azúcar (teleférico) ~USD 35 p/p</li>
+          <li>Escadaria Selarón y Santa Teresa · gratis</li>
+          <li>Noche de samba / show ~USD 60 p/p</li>
+          <li>Trilha o paseo en barco por las islas ~USD 40 p/p</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="head">
+        <h3>🛡️ Seguro de viaje</h3>
+        <div class="amt">USD 110<small>10 días · 2 pax</small></div>
+      </div>
+      <div class="body">
+        Seguro médico de viaje para Brasil, ~USD 5,5 por persona por día.
+        <ul>
+          <li>No es obligatorio para argentinos que ingresan a Brasil, pero muy recomendable.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="head">
+        <h3>🎁 Varios / souvenirs</h3>
+        <div class="amt">USD 150<small>2 pax</small></div>
+      </div>
+      <div class="body">
+        Regalos, protector solar, algún gasto de último momento.
+      </div>
+    </div>
+
+  </div>
+
+  <!-- TOTALS TABLE -->
+  <div class="sec-title">📊 Totales</div>
+  <div class="totals">
+    <table>
+      <thead><tr><th>Rubro</th><th>Monto (USD)</th></tr></thead>
+      <tbody>
+        <tr><td>Vuelos</td><td>760</td></tr>
+        <tr><td>Alojamiento</td><td>810</td></tr>
+        <tr><td>Comida</td><td>900</td></tr>
+        <tr><td>Transporte local</td><td>120</td></tr>
+        <tr><td>Actividades y tours</td><td>440</td></tr>
+        <tr><td>Seguro de viaje</td><td>110</td></tr>
+        <tr><td>Varios / souvenirs</td><td>150</td></tr>
+        <tr><td>Subtotal</td><td>3.290</td></tr>
+        <tr><td>Imprevistos (10%)</td><td>330</td></tr>
+        <tr class="grand"><td>Total (2 personas)</td><td>3.620</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="note">
+    📌 <b>Sobre estos números:</b> son estimaciones de referencia (agosto 2026) armadas para nivel "cómodo" —
+    hotel 3-4★, comida en restaurantes de gama media y las atracciones principales. Los precios reales de
+    vuelos y hoteles varían mucho según cuándo se reserve, así que conviene chequear tarifas concretas cerca
+    de la fecha y ajustar esta tabla. Referencia aproximada de cambio (ago 2026): USD 1 ≈ ARS 1.350 ≈ BRL 5,4
+    — verificar cotización actualizada antes de convertir montos grandes.
+  </div>
+
+  <footer>
+    Presupuesto de viaje a Río de Janeiro · 21-30 de noviembre
+  </footer>
+</div>
+
+<script>
+  document.querySelectorAll('.cats .card').forEach(c=>{
+    c.addEventListener('click',()=>c.classList.toggle('open'));
+  });
+
+  const target=new Date('2026-11-21T00:00:00-03:00').getTime();
+  function tick(){
+    const now=Date.now();
+    let diff=Math.max(0,target-now);
+    const d=Math.floor(diff/864e5);
+    const h=Math.floor(diff%864e5/36e5);
+    const m=Math.floor(diff%36e5/6e4);
+    const s=Math.floor(diff%6e4/1e3);
+    document.getElementById('d').textContent=d;
+    document.getElementById('h').textContent=String(h).padStart(2,'0');
+    document.getElementById('m').textContent=String(m).padStart(2,'0');
+    document.getElementById('s').textContent=String(s).padStart(2,'0');
+  }
+  tick();setInterval(tick,1000);
+</script>
+</body>
+</html>
