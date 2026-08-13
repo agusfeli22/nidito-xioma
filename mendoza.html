@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Presupuesto Mendoza 🍷 · 22-29 Nov</title>
+<style>
+  :root{
+    --bg:#2b0f1c;
+    --bg2:#4a1a2e;
+    --card:rgba(255,255,255,.07);
+    --card-brd:rgba(255,255,255,.14);
+    --ink:#faf3ea;
+    --muted:#d8b8c2;
+    --wine:#e0577e;
+    --wine2:#ff8fac;
+    --gold:#e8b84b;
+    --terracotta:#e08a5b;
+    --sand:#f0d9a8;
+    --shadow:0 20px 60px rgba(0,0,0,.45);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:"Segoe UI",system-ui,-apple-system,sans-serif;
+    color:var(--ink);
+    background:
+      radial-gradient(1200px 700px at 12% -8%, rgba(224,87,126,.30), transparent 60%),
+      radial-gradient(900px 600px at 108% 4%, rgba(224,138,91,.26), transparent 55%),
+      radial-gradient(800px 800px at 50% 120%, rgba(232,184,75,.14), transparent 60%),
+      linear-gradient(160deg,var(--bg),var(--bg2));
+    min-height:100vh;
+    padding:0 0 80px;
+    overflow-x:hidden;
+  }
+
+  .wrap{position:relative;z-index:2;max-width:1080px;margin:0 auto;padding:0 22px}
+
+  .topnav{max-width:1080px;margin:0 auto;padding:18px 22px 0}
+  .topnav a{color:var(--muted);font-size:13px;text-decoration:none;border:1px solid var(--card-brd);
+    padding:7px 14px;border-radius:999px;background:var(--card)}
+  .topnav a:hover{color:var(--ink);border-color:var(--wine2)}
+
+  header.hero{text-align:center;padding:40px 20px 30px;position:relative}
+  .kicker{
+    display:inline-block;letter-spacing:.28em;text-transform:uppercase;font-size:12px;
+    color:var(--wine2);border:1px solid var(--card-brd);padding:7px 16px;border-radius:999px;
+    background:var(--card);backdrop-filter:blur(6px);margin-bottom:22px;
+  }
+  h1{
+    font-size:clamp(32px,6vw,58px);line-height:1.05;font-weight:800;
+    background:linear-gradient(100deg,#fff,var(--gold) 40%,var(--wine2) 75%,var(--terracotta));
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+    text-shadow:0 2px 40px rgba(224,87,126,.25);
+  }
+  .sub{margin-top:16px;color:var(--muted);font-size:clamp(15px,2.2vw,19px);max-width:640px;margin-left:auto;margin-right:auto}
+
+  .count{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-top:34px}
+  .count .box{
+    background:var(--card);border:1px solid var(--card-brd);border-radius:18px;
+    padding:16px 20px;min-width:92px;backdrop-filter:blur(8px);box-shadow:var(--shadow);
+  }
+  .count .num{font-size:34px;font-weight:800;color:var(--gold);line-height:1}
+  .count .lbl{font-size:11px;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);margin-top:8px}
+
+  .sec-title{display:flex;align-items:center;gap:12px;margin:56px 0 10px;font-size:24px;font-weight:800}
+  .sec-title small{font-weight:500;color:var(--muted);font-size:14px}
+
+  /* summary stats */
+  .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-top:22px}
+  .stat{background:var(--card);border:1px solid var(--card-brd);border-radius:20px;padding:22px 22px;
+    box-shadow:var(--shadow);text-align:center}
+  .stat .big{font-size:26px;font-weight:800;color:var(--wine2)}
+  .stat .lbl{margin-top:8px;color:var(--muted);font-size:13px}
+  .stat.total .big{color:var(--gold)}
+
+  /* category cards */
+  .cats{display:flex;flex-direction:column;gap:14px;margin-top:22px}
+  .card{
+    background:var(--card);border:1px solid var(--card-brd);border-radius:20px;
+    padding:20px 22px;backdrop-filter:blur(10px);box-shadow:var(--shadow);
+    transition:transform .25s ease,border-color .25s ease;cursor:pointer;
+  }
+  .card:hover{transform:translateY(-3px);border-color:var(--wine2)}
+  .card .head{display:flex;justify-content:space-between;align-items:flex-start;gap:14px;flex-wrap:wrap}
+  .card h3{font-size:18px;display:flex;align-items:center;gap:10px}
+  .amt{font-size:19px;font-weight:800;color:var(--gold);white-space:nowrap}
+  .amt small{display:block;font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
+  .card .body{color:#f6e9ee;margin-top:0;line-height:1.6;font-size:14.5px;
+    max-height:0;overflow:hidden;transition:max-height .4s ease,margin .4s ease}
+  .card.open .body{max-height:1000px;margin-top:14px}
+  .card ul{margin:8px 0 0 18px;color:var(--muted);font-size:13.5px}
+  .card ul li{margin:5px 0}
+  .toggle-hint{font-size:11px;color:var(--muted);opacity:.7;margin-top:2px;display:block}
+  .card .shot{margin-top:14px;border-radius:12px;overflow:hidden;border:1px solid var(--card-brd);box-shadow:0 10px 30px rgba(0,0,0,.35)}
+  .card .shot img{display:block;width:100%;height:auto}
+  .card .shot-cap{font-size:11px;color:var(--muted);margin-top:6px;opacity:.8}
+  .pend{display:inline-block;margin-top:10px;font-size:11px;font-weight:700;letter-spacing:.04em;
+    color:var(--gold);background:rgba(232,184,75,.12);border:1px solid rgba(232,184,75,.35);
+    border-radius:999px;padding:4px 10px}
+
+  /* totals table */
+  .totals{margin-top:26px;background:var(--card);border:1px solid var(--card-brd);border-radius:20px;
+    overflow:hidden;box-shadow:var(--shadow)}
+  .totals table{width:100%;border-collapse:collapse;font-size:14.5px}
+  .totals th{text-align:left;padding:14px 18px;color:var(--muted);font-size:11px;text-transform:uppercase;
+    letter-spacing:.08em;border-bottom:1px solid var(--card-brd)}
+  .totals td{padding:12px 18px;border-bottom:1px solid rgba(255,255,255,.06)}
+  .totals tr:last-child td{border-bottom:none}
+  .totals td:last-child, .totals th:last-child{text-align:right;font-variant-numeric:tabular-nums}
+  .totals tr.grand td{font-weight:800;font-size:16px;color:var(--gold);border-top:1px solid var(--card-brd)}
+
+  .note{margin-top:22px;background:rgba(224,138,91,.09);border:1px dashed rgba(224,138,91,.4);
+    border-radius:14px;padding:16px 18px;color:#fbe6d8;font-size:13.5px;line-height:1.7}
+  .note b{color:var(--terracotta)}
+  .note p+p{margin-top:10px}
+
+  /* map */
+  .mapcard{background:var(--card);border:1px solid var(--card-brd);border-radius:20px;
+    padding:18px;backdrop-filter:blur(10px);box-shadow:var(--shadow);margin-top:22px}
+  .mapcard svg{width:100%;height:auto;border-radius:14px;display:block}
+  .map-cap{margin-top:14px;color:var(--muted);font-size:13.5px;text-align:center}
+
+  footer{text-align:center;margin-top:60px;color:var(--muted);font-size:13px;line-height:1.8}
+</style>
+</head>
+<body>
+
+<div class="topnav"><a href="index.html">← volver al Nidito de Amor</a></div>
+
+<div class="wrap">
+  <header class="hero">
+    <span class="kicker">🍇 Presupuesto de viaje</span>
+    <h1>Mendoza 🍷🏔️</h1>
+    <p class="sub">22 → 29 de noviembre · 7 noches / 8 días · 2 viajeros desde Buenos Aires</p>
+
+    <div class="count" id="countdown">
+      <div class="box"><div class="num" id="d">–</div><div class="lbl">Días</div></div>
+      <div class="box"><div class="num" id="h">–</div><div class="lbl">Horas</div></div>
+      <div class="box"><div class="num" id="m">–</div><div class="lbl">Min</div></div>
+      <div class="box"><div class="num" id="s">–</div><div class="lbl">Seg</div></div>
+    </div>
+    <p class="sub" style="margin-top:16px;font-size:14px">⏳ para viajar a Mendoza · <b>domingo 22 de noviembre</b></p>
+  </header>
+
+  <!-- MAP -->
+  <div class="sec-title">🗺️ El recorrido <small>· Mendoza capital → zonas bodegueras</small></div>
+  <div class="mapcard">
+    <svg viewBox="0 0 900 460" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Mapa estilizado de Mendoza con la ciudad y las tres zonas bodegueras: Luján de Cuyo, Maipú y Valle de Uco, al pie de la Cordillera de los Andes">
+      <defs>
+        <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#f6c98f"/>
+          <stop offset="100%" stop-color="#a5456a"/>
+        </linearGradient>
+        <linearGradient id="mountain" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#a9819f"/>
+          <stop offset="100%" stop-color="#5c3a56"/>
+        </linearGradient>
+        <linearGradient id="valley" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#dba949"/>
+          <stop offset="100%" stop-color="#a5652f"/>
+        </linearGradient>
+      </defs>
+
+      <rect x="0" y="0" width="900" height="460" fill="url(#sky)"/>
+
+      <path d="M0,190 L80,75 L150,155 L225,45 L300,145 L375,60 L455,165 L535,65 L615,155 L695,50 L775,145 L860,80 L900,175 L900,0 L0,0 Z" fill="url(#mountain)"/>
+      <path d="M70,85 L80,75 L92,88 Z" fill="#fff" opacity=".9"/>
+      <path d="M214,57 L225,45 L238,60 Z" fill="#fff" opacity=".9"/>
+      <path d="M364,73 L375,60 L388,76 Z" fill="#fff" opacity=".9"/>
+      <path d="M523,78 L535,65 L548,80 Z" fill="#fff" opacity=".9"/>
+      <path d="M683,63 L695,50 L708,65 Z" fill="#fff" opacity=".9"/>
+
+      <path d="M0,195 C150,215 250,180 400,200 C550,220 650,185 800,205 C850,213 880,205 900,200 L900,460 L0,460 Z" fill="url(#valley)"/>
+      <path d="M40,240 L90,215 M60,255 L110,230 M80,270 L130,245 M100,285 L150,260 M120,300 L170,275" stroke="rgba(60,30,10,.28)" stroke-width="3" stroke-linecap="round"/>
+      <path d="M400,255 L450,230 M420,270 L470,245 M440,285 L490,260 M460,300 L510,275 M480,315 L530,290" stroke="rgba(60,30,10,.22)" stroke-width="3" stroke-linecap="round"/>
+      <path d="M650,270 L700,245 M670,285 L720,260 M690,300 L740,275 M710,315 L760,290 M730,330 L780,305" stroke="rgba(60,30,10,.18)" stroke-width="3" stroke-linecap="round"/>
+
+      <text x="800" y="60" font-size="42">☀️</text>
+
+      <path d="M250,300 C210,335 175,355 150,380" fill="none" stroke="#fff" stroke-width="3" stroke-dasharray="2 10" stroke-linecap="round" opacity=".85"/>
+      <path d="M250,300 C290,335 320,360 350,390" fill="none" stroke="#fff" stroke-width="3" stroke-dasharray="2 10" stroke-linecap="round" opacity=".85"/>
+      <path d="M250,300 C380,335 480,365 600,400" fill="none" stroke="#fff" stroke-width="3" stroke-dasharray="2 10" stroke-linecap="round" opacity=".85"/>
+
+      <text x="330" y="345" font-size="22">🚗</text>
+
+      <circle cx="250" cy="300" r="10" fill="#e0577e" stroke="#fff" stroke-width="3"/>
+      <g transform="translate(250,268)">
+        <rect x="-72" y="-16" width="144" height="30" rx="15" fill="rgba(43,15,28,.82)"/>
+        <text x="0" y="5" text-anchor="middle" font-size="14" font-weight="800" fill="#fff">Mendoza (base)</text>
+      </g>
+
+      <circle cx="150" cy="380" r="8" fill="#e8b84b" stroke="#fff" stroke-width="3"/>
+      <g transform="translate(150,412)">
+        <rect x="-78" y="-15" width="156" height="42" rx="12" fill="rgba(43,15,28,.82)"/>
+        <text x="0" y="0" text-anchor="middle" font-size="14" font-weight="800" fill="#fff">Luján de Cuyo</text>
+        <text x="0" y="16" text-anchor="middle" font-size="11" fill="#f0d9a8">🍇 ~20 min</text>
+      </g>
+
+      <circle cx="350" cy="390" r="8" fill="#e8b84b" stroke="#fff" stroke-width="3"/>
+      <g transform="translate(350,422)">
+        <rect x="-52" y="-15" width="104" height="42" rx="12" fill="rgba(43,15,28,.82)"/>
+        <text x="0" y="0" text-anchor="middle" font-size="14" font-weight="800" fill="#fff">Maipú</text>
+        <text x="0" y="16" text-anchor="middle" font-size="11" fill="#f0d9a8">🍇 ~25 min</text>
+      </g>
+
+      <circle cx="600" cy="400" r="8" fill="#e8b84b" stroke="#fff" stroke-width="3"/>
+      <g transform="translate(600,432)">
+        <rect x="-70" y="-15" width="140" height="42" rx="12" fill="rgba(43,15,28,.82)"/>
+        <text x="0" y="0" text-anchor="middle" font-size="14" font-weight="800" fill="#fff">Valle de Uco</text>
+        <text x="0" y="16" text-anchor="middle" font-size="11" fill="#f0d9a8">🍇 ~1h</text>
+      </g>
+    </svg>
+    <p class="map-cap">Base en Mendoza Capital, con salidas en auto a las tres zonas bodegueras más visitadas — Luján de Cuyo, Maipú y Valle de Uco — más una excursión de día completo a la Alta Montaña (Uspallata, Puente del Inca, vista del Aconcagua).</p>
+  </div>
+
+  <!-- SUMMARY -->
+  <div class="sec-title">💰 Resumen <small>· estimación nivel "cómodo", en ARS</small></div>
+  <div class="stats">
+    <div class="stat total"><div class="big">ARS 2.638.900</div><div class="lbl">Total estimado (2 personas)</div></div>
+    <div class="stat"><div class="big">ARS 1.319.450</div><div class="lbl">Por persona</div></div>
+    <div class="stat"><div class="big">ARS 329.863</div><div class="lbl">Por día (los 2)</div></div>
+    <div class="stat"><div class="big">ARS 164.931</div><div class="lbl">Por día, por persona</div></div>
+  </div>
+
+  <!-- CATEGORIES -->
+  <div class="sec-title">🧾 Desglose por rubro <small>· tocá cada tarjeta para ver el detalle</small></div>
+  <div class="cats">
+
+    <div class="card open">
+      <div class="head">
+        <h3>✈️ Vuelos BUE ↔ MDZ</h3>
+        <div class="amt">ARS 600.000<small>estimado · 2 pax</small></div>
+      </div>
+      <div class="body">
+        Estimación de referencia para un vuelo doméstico ida y vuelta, categoría "cómodo" (no la tarifa promo más baja), ~ARS 300.000 por persona.
+        <ul>
+          <li>Rutas cubiertas por Aerolíneas Argentinas, Flybondi y JetSMART, ~1h40 de vuelo.</li>
+          <li>Conviene reservar con 1-2 meses de anticipación para mejor tarifa.</li>
+          <li>💡 Tenés un <b>voucher de Flybondi de USD 399,41</b> a favor del vuelo cancelado a Río — Flybondi también vuela a Mendoza, así que probablemente se pueda aplicar acá. Confirmalo directamente con la aerolínea.</li>
+        </ul>
+        <span class="pend">⏳ Falta cotizar real en flybondi.com / aerolineas.com.ar</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="head">
+        <h3>🏨 Alojamiento</h3>
+        <div class="amt">ARS 595.000<small>7 noches · hab. doble</small></div>
+      </div>
+      <div class="body">
+        Hotel o posada 3-4★ en Mendoza Capital o Chacras de Coria (Luján de Cuyo), ~ARS 85.000/noche la habitación doble.
+        <ul>
+          <li>Chacras de Coria: más cerca de las bodegas, ambiente tranquilo.</li>
+          <li>Mendoza Capital: más vida urbana, buena base para moverse en auto.</li>
+        </ul>
+        <span class="pend">⏳ Falta buscar opciones reales (Booking/Airbnb)</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="head">
+        <h3>🍽️ Comida</h3>
+        <div class="amt">ARS 400.000<small>8 días · 2 pax</small></div>
+      </div>
+      <div class="body">
+        ~ARS 25.000 por persona por día (almuerzo + cena en restaurantes de gama media).
+        <ul>
+          <li>Vale la pena reservar 1-2 cenas especiales con maridaje en alguna bodega.</li>
+          <li>Asados, empanadas mendocinas y buena carne bajan el promedio si se usan seguido.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="head">
+        <h3>🚗 Auto de alquiler</h3>
+        <div class="amt">ARS 304.000<small>8 días · económico</small></div>
+      </div>
+      <div class="body">
+        Auto categoría económica para moverse entre bodegas de Luján de Cuyo, Maipú y Valle de Uco, ~ARS 38.000/día.
+        <ul>
+          <li>Fundamental para el plan de bodegas — el transporte público no llega bien a las zonas rurales.</li>
+          <li>Con degustaciones de por medio, conviene turnarse para manejar o sumar algún tour con chofer el día de más bodegas.</li>
+          <li>No incluye combustible ni peajes (rubro aparte).</li>
+        </ul>
+        <span class="pend">⏳ Falta cotizar real (Localiza, Avis, etc.)</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="head">
+        <h3>⛽ Combustible y peajes</h3>
+        <div class="amt">ARS 70.000<small>toda la semana</small></div>
+      </div>
+      <div class="body">
+        Nafta y peajes para los recorridos por las zonas bodegueras y la excursión a la Alta Montaña (Uspallata / Puente del Inca).
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="head">
+        <h3>🍇 Actividades y bodegas</h3>
+        <div class="amt">ARS 250.000<small>2 pax</small></div>
+      </div>
+      <div class="body">
+        Visitas y degustaciones en bodegas, más una excursión de día completo.
+        <ul>
+          <li>4-5 visitas a bodegas (Luján de Cuyo, Maipú, Valle de Uco) con degustación, ~ARS 20.000 p/p promedio cada una.</li>
+          <li>Excursión a la Alta Montaña (Puente del Inca, Uspallata, vista del Aconcagua) ~ARS 45.000 p/p.</li>
+          <li>Cerro de la Gloria / Parque General San Martín · gratis.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="head">
+        <h3>🍾 Varios / vinos para llevar</h3>
+        <div class="amt">ARS 180.000<small>2 pax</small></div>
+      </div>
+      <div class="body">
+        Vino para volver con la valija llena, souvenirs, algún gasto de último momento.
+        <ul>
+          <li>Muchas bodegas ofrecen despacho de vino a domicilio en Argentina — conviene comparar precios antes de cargar todo en la valija.</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- TOTALS TABLE -->
+  <div class="sec-title">📊 Totales</div>
+  <div class="totals">
+    <table>
+      <thead><tr><th>Rubro</th><th>Monto (ARS)</th></tr></thead>
+      <tbody>
+        <tr><td>Vuelos (estimado)</td><td>600.000</td></tr>
+        <tr><td>Alojamiento (estimado)</td><td>595.000</td></tr>
+        <tr><td>Comida</td><td>400.000</td></tr>
+        <tr><td>Auto de alquiler (estimado)</td><td>304.000</td></tr>
+        <tr><td>Combustible y peajes</td><td>70.000</td></tr>
+        <tr><td>Actividades y bodegas</td><td>250.000</td></tr>
+        <tr><td>Varios / vinos para llevar</td><td>180.000</td></tr>
+        <tr><td>Subtotal</td><td>2.399.000</td></tr>
+        <tr><td>Imprevistos (10%)</td><td>239.900</td></tr>
+        <tr class="grand"><td>Total (2 personas)</td><td>2.638.900</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="note">
+    📌 <b>Sobre estos números:</b> al cancelar Río, este presupuesto para Mendoza arranca con estimaciones de
+    referencia (agosto 2026) — a diferencia del anterior, todavía no hay cotizaciones reales de vuelo,
+    alojamiento ni auto. A medida que consigas precios reales (flybondi.com, aerolineas.com.ar, Booking,
+    Localiza/Avis) los vamos reemplazando, igual que hicimos con Río.
+    <p>💡 <b>No perder de vista:</b> el voucher de Flybondi de USD 399,41 (del vuelo cancelado a Río) podría
+    aplicarse acá si volás con esa aerolínea — confirmalo con ellos antes de comprar el pasaje.</p>
+    <p>No incluimos seguro de viaje porque es un trayecto doméstico dentro de Argentina. Referencia aproximada
+    de cambio (ago 2026): USD 1 ≈ ARS 1.350 (verificar cotización actualizada) → el total ronda los USD 1.955
+    para los dos.</p>
+  </div>
+
+  <footer>
+    🍇 Presupuesto de viaje a Mendoza · 22-29 de noviembre
+  </footer>
+</div>
+
+<script>
+  document.querySelectorAll('.cats .card').forEach(c=>{
+    c.addEventListener('click',()=>c.classList.toggle('open'));
+  });
+
+  const target=new Date('2026-11-22T00:00:00-03:00').getTime();
+  function tick(){
+    const now=Date.now();
+    let diff=Math.max(0,target-now);
+    const d=Math.floor(diff/864e5);
+    const h=Math.floor(diff%864e5/36e5);
+    const m=Math.floor(diff%36e5/6e4);
+    const s=Math.floor(diff%6e4/1e3);
+    document.getElementById('d').textContent=d;
+    document.getElementById('h').textContent=String(h).padStart(2,'0');
+    document.getElementById('m').textContent=String(m).padStart(2,'0');
+    document.getElementById('s').textContent=String(s).padStart(2,'0');
+  }
+  tick();setInterval(tick,1000);
+</script>
+</body>
+</html>
