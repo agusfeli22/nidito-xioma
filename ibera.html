@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Presupuesto Esteros del Iberá 🐊 · 22-30 Nov</title>
+<style>
+  :root{
+    --bg:#0b2e28;
+    --bg2:#123f34;
+    --card:rgba(255,255,255,.07);
+    --card-brd:rgba(255,255,255,.14);
+    --ink:#f2f7ee;
+    --muted:#a9c9bb;
+    --lily:#4caf6b;
+    --lily2:#8fe3a0;
+    --gold:#e8b84b;
+    --clay:#d98a5a;
+    --sand:#e8dca0;
+    --shadow:0 20px 60px rgba(0,0,0,.45);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:"Segoe UI",system-ui,-apple-system,sans-serif;
+    color:var(--ink);
+    background:
+      radial-gradient(1200px 700px at 12% -8%, rgba(76,175,107,.30), transparent 60%),
+      radial-gradient(900px 600px at 108% 4%, rgba(217,138,90,.24), transparent 55%),
+      radial-gradient(800px 800px at 50% 120%, rgba(232,184,75,.14), transparent 60%),
+      linear-gradient(160deg,var(--bg),var(--bg2));
+    min-height:100vh;
+    padding:0 0 80px;
+    overflow-x:hidden;
+  }
+
+  .wrap{position:relative;z-index:2;max-width:1080px;margin:0 auto;padding:0 22px}
+
+  .topnav{max-width:1080px;margin:0 auto;padding:18px 22px 0;display:flex;gap:10px;flex-wrap:wrap}
+  .topnav a{color:var(--muted);font-size:13px;text-decoration:none;border:1px solid var(--card-brd);
+    padding:7px 14px;border-radius:999px;background:var(--card)}
+  .topnav a:hover{color:var(--ink);border-color:var(--lily2)}
+
+  header.hero{text-align:center;padding:40px 20px 30px;position:relative}
+  .kicker{
+    display:inline-block;letter-spacing:.28em;text-transform:uppercase;font-size:12px;
+    color:var(--lily2);border:1px solid var(--card-brd);padding:7px 16px;border-radius:999px;
+    background:var(--card);backdrop-filter:blur(6px);margin-bottom:22px;
+  }
+  h1{
+    font-size:clamp(32px,6vw,58px);line-height:1.05;font-weight:800;
+    background:linear-gradient(100deg,#fff,var(--gold) 40%,var(--lily2) 75%,var(--clay));
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+    text-shadow:0 2px 40px rgba(76,175,107,.25);
+  }
+  .sub{margin-top:16px;color:var(--muted);font-size:clamp(15px,2.2vw,19px);max-width:640px;margin-left:auto;margin-right:auto}
+
+  .count{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-top:34px}
+  .count .box{
+    background:var(--card);border:1px solid var(--card-brd);border-radius:18px;
+    padding:16px 20px;min-width:92px;backdrop-filter:blur(8px);box-shadow:var(--shadow);
+  }
+  .count .num{font-size:34px;font-weight:800;color:var(--gold);line-height:1}
+  .count .lbl{font-size:11px;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);margin-top:8px}
+
+  .sec-title{display:flex;align-items:center;gap:12px;margin:56px 0 10px;font-size:24px;font-weight:800}
+  .sec-title small{font-weight:500;color:var(--muted);font-size:14px}
+
+  /* summary stats */
+  .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-top:22px}
+  .stat{background:var(--card);border:1px solid var(--card-brd);border-radius:20px;padding:22px 22px;
+    box-shadow:var(--shadow);text-align:center}
+  .stat .big{font-size:26px;font-weight:800;color:var(--lily2)}
+  .stat .lbl{margin-top:8px;color:var(--muted);font-size:13px}
+  .stat.total .big{color:var(--gold)}
+
+  /* category cards */
+  .cats{display:flex;flex-direction:column;gap:14px;margin-top:22px}
+  .card{
+    background:var(--card);border:1px solid var(--card-brd);border-radius:20px;
+    padding:20px 22px;backdrop-filter:blur(10px);box-shadow:var(--shadow);
+    transition:transform .25s ease,border-color .25s ease;cursor:pointer;
+  }
+  .card:hover{transform:translateY(-3px);border-color:var(--lily2)}
+  .card .head{display:flex;justify-content:space-between;align-items:flex-start;gap:14px;flex-wrap:wrap}
+  .card h3{font-size:18px;display:flex;align-items:center;gap:10px}
+  .amt{font-size:19px;font-weight:800;color:var(--gold);white-space:nowrap}
+  .amt small{display:block;font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
+  .card .body{color:#eef7ee;margin-top:0;line-height:1.6;font-size:14.5px;
+    max-height:0;overflow:hidden;transition:max-height .4s ease,margin .4s ease}
+  .card.open .body{max-height:1000px;margin-top:14px}
+  .card ul{margin:8px 0 0 18px;color:var(--muted);font-size:13.5px}
+  .card ul li{margin:5px 0}
+  .toggle-hint{font-size:11px;color:var(--muted);opacity:.7;margin-top:2px;display:block}
+  .pend{display:inline-block;margin-top:10px;font-size:11px;font-weight:700;letter-spacing:.04em;
+    color:var(--gold);background:rgba(232,184,75,.12);border:1px solid rgba(232,184,75,.35);
+    border-radius:999px;padding:4px 10px}
+
+  /* totals table */
+  .totals{margin-top:26px;background:var(--card);border:1px solid var(--card-brd);border-radius:20px;
+    overflow:hidden;box-shadow:var(--shadow)}
+  .totals table{width:100%;border-collapse:collapse;font-size:14.5px}
+  .totals th{text-align:left;padding:14px 18px;color:var(--muted);font-size:11px;text-transform:uppercase;
+    letter-spacing:.08em;border-bottom:1px solid var(--card-brd)}
+  .totals td{padding:12px 18px;border-bottom:1px solid rgba(255,255,255,.06)}
+  .totals tr:last-child td{border-bottom:none}
+  .totals td:last-child, .totals th:last-child{text-align:right;font-variant-numeric:tabular-nums}
+  .totals tr.grand td{font-weight:800;font-size:16px;color:var(--gold);border-top:1px solid var(--card-brd)}
+
+  .note{margin-top:22px;background:rgba(217,138,90,.09);border:1px dashed rgba(217,138,90,.4);
+    border-radius:14px;padding:16px 18px;color:#fbe8d8;font-size:13.5px;line-height:1.7}
+  .note b{color:var(--clay)}
+  .note p+p{margin-top:10px}
+  .callout{margin-top:22px;background:rgba(76,175,107,.1);border:1px dashed rgba(76,175,107,.45);
+    border-radius:14px;padding:16px 18px;color:#e6f7ea;font-size:13.5px;line-height:1.7}
+  .callout b{color:var(--lily2)}
+
+  /* map */
+  .mapcard{background:var(--card);border:1px solid var(--card-brd);border-radius:20px;
+    padding:18px;backdrop-filter:blur(10px);box-shadow:var(--shadow);margin-top:22px}
+  .mapcard svg{width:100%;height:auto;border-radius:14px;display:block}
+  .map-cap{margin-top:14px;color:var(--muted);font-size:13.5px;text-align:center}
+
+  footer{text-align:center;margin-top:60px;color:var(--muted);font-size:13px;line-height:1.8}
+</style>
+</head>
+<body>
+
+<div class="topnav">
+  <a href="index.html">← volver al Nidito de Amor</a>
+  <a href="mendoza.html">🍷 Presupuesto Mendoza →</a>
+</div>
+
+<div class="wrap">
+  <header class="hero">
+    <span class="kicker">🐊 Presupuesto de viaje</span>
+    <h1>Esteros del Iberá 🐊🛶</h1>
+    <p class="sub">22 → 30 de noviembre · 8 noches / 9 días · 2 viajeros desde Urdinarrain</p>
+
+    <div class="count" id="countdown">
+      <div class="box"><div class="num" id="d">–</div><div class="lbl">Días</div></div>
+      <div class="box"><div class="num" id="h">–</div><div class="lbl">Horas</div></div>
+      <div class="box"><div class="num" id="m">–</div><div class="lbl">Min</div></div>
+      <div class="box"><div class="num" id="s">–</div><div class="lbl">Seg</div></div>
+    </div>
+    <p class="sub" style="margin-top:16px;font-size:14px">⏳ para viajar a los Esteros · <b>domingo 22 de noviembre</b></p>
+  </header>
+
+  <div class="callout">
+    ⚠️ <b>Ojo:</b> estas son las mismas fechas que el presupuesto de <a href="mendoza.html" style="color:var(--gold)">Mendoza</a> —
+    esta página sirve para comparar las dos opciones, no para hacer los dos viajes juntos. Elegí uno.
+  </div>
+
+  <!-- MAP -->
+  <div class="sec-title">🗺️ El recorrido <small>· Urdinarrain → Colonia Carlos Pellegrini</small></div>
+  <div class="mapcard">
+    <svg viewBox="0 0 900 460" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Mapa estilizado del recorrido desde Urdinarrain hasta Colonia Carlos Pellegrini, puerta de entrada a los Esteros del Iberá">
+      <defs>
+        <linearGradient id="sky3" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#eec877"/>
+          <stop offset="100%" stop-color="#2f6b52"/>
+        </linearGradient>
+        <linearGradient id="water" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#1f7a56"/>
+          <stop offset="100%" stop-color="#0a3a2c"/>
+        </linearGradient>
+      </defs>
+
+      <rect x="0" y="0" width="900" height="460" fill="url(#sky3)"/>
+
+      <path d="M0,140 C100,120 180,150 260,130 C340,110 420,145 500,125 C580,105 660,135 740,120 C800,110 860,125 900,115 L900,0 L0,0 Z" fill="#0d3a2c" opacity=".55"/>
+
+      <path d="M0,205 C150,185 300,215 450,195 C600,175 750,205 900,185 L900,460 L0,460 Z" fill="url(#water)"/>
+
+      <g opacity=".55" fill="#2f9f6a">
+        <ellipse cx="120" cy="270" rx="16" ry="8"/>
+        <ellipse cx="160" cy="290" rx="12" ry="6"/>
+        <ellipse cx="520" cy="260" rx="15" ry="7"/>
+        <ellipse cx="560" cy="285" rx="11" ry="6"/>
+        <ellipse cx="700" cy="300" rx="14" ry="7"/>
+        <ellipse cx="740" cy="320" rx="12" ry="6"/>
+        <ellipse cx="330" cy="340" rx="16" ry="8"/>
+        <ellipse cx="380" cy="365" rx="12" ry="6"/>
+      </g>
+
+      <g stroke="rgba(232,220,160,.35)" stroke-width="3" stroke-linecap="round">
+        <path d="M60,230 L55,205 M75,230 L72,200"/>
+        <path d="M810,250 L805,222 M825,252 L822,218"/>
+        <path d="M250,410 L246,385 M264,412 L262,380"/>
+      </g>
+
+      <text x="800" y="55" font-size="40">🌅</text>
+      <text x="150" y="245" font-size="24">🦩</text>
+      <text x="600" y="235" font-size="24">🐊</text>
+      <text x="450" y="405" font-size="24">🐊</text>
+      <text x="700" y="365" font-size="24">🦩</text>
+
+      <path d="M120,360 C260,320 380,300 470,290 C560,280 620,270 680,255" fill="none" stroke="#fff" stroke-width="3" stroke-dasharray="2 11" stroke-linecap="round" opacity=".9"/>
+
+      <text x="330" y="330" font-size="22">🚗</text>
+      <text x="590" y="260" font-size="26">🛶</text>
+
+      <circle cx="120" cy="360" r="9" fill="#d98a5a" stroke="#fff" stroke-width="3"/>
+      <g transform="translate(120,392)">
+        <rect x="-72" y="-16" width="144" height="30" rx="15" fill="rgba(11,46,40,.82)"/>
+        <text x="0" y="5" text-anchor="middle" font-size="14" font-weight="800" fill="#fff">Urdinarrain</text>
+      </g>
+
+      <circle cx="680" cy="255" r="9" fill="#d98a5a" stroke="#fff" stroke-width="3"/>
+      <g transform="translate(680,225)">
+        <rect x="-118" y="-16" width="236" height="30" rx="15" fill="rgba(11,46,40,.82)"/>
+        <text x="0" y="5" text-anchor="middle" font-size="14" font-weight="800" fill="#fff">Colonia Carlos Pellegrini</text>
+      </g>
+
+      <g transform="translate(400,435)">
+        <rect x="-90" y="-15" width="180" height="28" rx="14" fill="rgba(11,46,40,.82)"/>
+        <text x="0" y="5" text-anchor="middle" font-size="13" fill="#e8dca0" font-weight="700">🚗 ~430 km (~1 tramo de ripio)</text>
+      </g>
+    </svg>
+    <p class="map-cap">Ruta por RN14 / RN123 hasta Mercedes (Corrientes) y de ahí a Colonia Carlos Pellegrini, la puerta de entrada más visitada a los Esteros del Iberá — los últimos ~100 km son de camino de ripio.</p>
+  </div>
+
+  <!-- SUMMARY -->
+  <div class="sec-title">💰 Resumen <small>· estimación nivel "cómodo", en ARS</small></div>
+  <div class="stats">
+    <div class="stat total"><div class="big">ARS 2.728.000</div><div class="lbl">Total estimado (2 personas)</div></div>
+    <div class="stat"><div class="big">ARS 1.364.000</div><div class="lbl">Por persona</div></div>
+    <div class="stat"><div class="big">ARS 303.111</div><div class="lbl">Por día (los 2)</div></div>
+    <div class="stat"><div class="big">ARS 151.556</div><div class="lbl">Por día, por persona</div></div>
+  </div>
+
+  <!-- CATEGORIES -->
+  <div class="sec-title">🧾 Desglose por rubro <small>· tocá cada tarjeta para ver el detalle</small></div>
+  <div class="cats">
+
+    <div class="card open">
+      <div class="head">
+        <h3>⛽ Combustible y peajes</h3>
+        <div class="amt">ARS 400.000<small>estimado · ida y vuelta</small></div>
+      </div>
+      <div class="body">
+        Estimación para el viaje en auto Urdinarrain ↔ Colonia Carlos Pellegrini, ~430 km por tramo (~860 km ida y vuelta).
+        <ul>
+          <li>Ruta aproximada: Urdinarrain → Concordia → Mercedes (Corrientes) → Colonia Carlos Pellegrini.</li>
+          <li>Los últimos ~100 km son de ripio (camino de tierra) — conviene sumar tiempo extra y ver el estado del camino antes de salir.</li>
+          <li>Incluye combustible de ambos tramos + peajes en ruta.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card open">
+      <div class="head">
+        <h3>🏕️ Posada con pensión completa</h3>
+        <div class="amt">ARS 1.920.000<small>8 noches · 2 pax</small></div>
+      </div>
+      <div class="body">
+        Estimación de referencia: ~ARS 120.000 por persona por noche, todo incluido.
+        <ul>
+          <li>Incluye alojamiento, las 4 comidas del día (desayuno, almuerzo, merienda, cena) y 2 excursiones guiadas por día — típicamente un safari en lancha por la laguna y una cabalgata o caminata nocturna de avistaje.</li>
+          <li>Colonia Carlos Pellegrini es la puerta de entrada más visitada y con más oferta de posadas de los Esteros.</li>
+          <li>Posadas conocidas para cotizar: Irupé Lodge, Rancho Iberá, Nandé Retá, Posada de la Laguna, Aguapé.</li>
+        </ul>
+        <span class="pend">⏳ Estimación propia — falta cotizar posadas reales</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="head">
+        <h3>🛶 Excursiones extra</h3>
+        <div class="amt">ARS 60.000<small>2 pax</small></div>
+      </div>
+      <div class="body">
+        Las excursiones principales (safari en lancha + cabalgata/caminata) ya están incluidas en la posada.
+        <ul>
+          <li>Este monto es para algún extra: salida de pesca, avistaje nocturno adicional, paseo en kayak, etc.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="head">
+        <h3>🎁 Varios / souvenirs</h3>
+        <div class="amt">ARS 100.000<small>2 pax</small></div>
+      </div>
+      <div class="body">
+        Artesanías correntinas, repelente de mosquitos (imprescindible en los Esteros), algún gasto de último momento.
+      </div>
+    </div>
+
+  </div>
+
+  <!-- TOTALS TABLE -->
+  <div class="sec-title">📊 Totales</div>
+  <div class="totals">
+    <table>
+      <thead><tr><th>Rubro</th><th>Monto (ARS)</th></tr></thead>
+      <tbody>
+        <tr><td>Combustible y peajes (estimado)</td><td>400.000</td></tr>
+        <tr><td>Posada pensión completa (estimado)</td><td>1.920.000</td></tr>
+        <tr><td>Excursiones extra</td><td>60.000</td></tr>
+        <tr><td>Varios / souvenirs</td><td>100.000</td></tr>
+        <tr><td>Subtotal</td><td>2.480.000</td></tr>
+        <tr><td>Imprevistos (10%)</td><td>248.000</td></tr>
+        <tr class="grand"><td>Total (2 personas)</td><td>2.728.000</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="note">
+    📌 <b>Sobre estos números:</b> a diferencia de Mendoza, acá casi todo el presupuesto está concentrado en un
+    solo rubro — la <b>posada con pensión completa</b>, que ya incluye comida y las excursiones principales.
+    Todavía es una estimación propia (~ARS 120.000 p/p/noche); falta cotizar posadas reales para reemplazarla.
+    <p>🕐 <b>A tener en cuenta:</b> 8 noches es una estadía larga para este tipo de destino — la mayoría de los
+    visitantes se queda 2-4 noches en los Esteros. Si preferís acortar la estadía y combinar el resto del viaje
+    con otra cosa, avisame y rearmo el presupuesto con menos noches.</p>
+    <p>No incluimos seguro de viaje ni auto de alquiler porque es un trayecto doméstico en auto propio, y dentro
+    de Colonia Carlos Pellegrini las excursiones se hacen a pie o en lancha con la posada. Referencia de cambio:
+    USD 1 = ARS 1.500 → el total ronda los USD 1.819 para los dos.</p>
+  </div>
+
+  <footer>
+    🐊 Presupuesto de viaje a los Esteros del Iberá · 22-30 de noviembre
+  </footer>
+</div>
+
+<script>
+  document.querySelectorAll('.cats .card').forEach(c=>{
+    c.addEventListener('click',()=>c.classList.toggle('open'));
+  });
+
+  const target=new Date('2026-11-22T00:00:00-03:00').getTime();
+  function tick(){
+    const now=Date.now();
+    let diff=Math.max(0,target-now);
+    const d=Math.floor(diff/864e5);
+    const h=Math.floor(diff%864e5/36e5);
+    const m=Math.floor(diff%36e5/6e4);
+    const s=Math.floor(diff%6e4/1e3);
+    document.getElementById('d').textContent=d;
+    document.getElementById('h').textContent=String(h).padStart(2,'0');
+    document.getElementById('m').textContent=String(m).padStart(2,'0');
+    document.getElementById('s').textContent=String(s).padStart(2,'0');
+  }
+  tick();setInterval(tick,1000);
+</script>
+</body>
+</html>
